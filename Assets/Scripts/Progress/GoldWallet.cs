@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class GoldWallet : MonoBehaviour
 {
-    [field:SerializeField] public int CurrentGold { get; private set; }
+    public int CurrentGold { get; private set; }
+    public event Action<int> OnGoldChanged;
 
     private void Awake()
     {
@@ -18,10 +19,12 @@ public class GoldWallet : MonoBehaviour
     public void Add(int gold)
     {
         CurrentGold += gold;
+        OnGoldChanged?.Invoke(CurrentGold);
     }
 
     public void Spend(int cost)
     {
         CurrentGold -= cost;
+        OnGoldChanged?.Invoke(CurrentGold);
     }
 }

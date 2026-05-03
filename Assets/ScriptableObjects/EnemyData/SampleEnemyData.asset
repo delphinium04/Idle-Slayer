@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: SE
   GoldReward: 15
   Health: 10
-  Strength: 5
+  Attack: 2
   Defense: 1

@@ -1,23 +1,23 @@
 using UnityEngine;
 
-public class StrengthUpgradeSystem : MonoBehaviour
+public class AttackUpgradeSystem : MonoBehaviour
 {
-    [field:SerializeField] public int CurrentUpgradeCost { get; private set; }
-
+    [field: SerializeField] public int CurrentUpgradeCost { get; private set; }
+    public PlayerCharacter PlayerCharacter;
     public GoldWallet GoldWallet;
-    
+
     private int _level;
     private int _baseUpgradeCost;
     private int _costIncreasePerLevel;
-    private int _strengthIncreasePerLevel;
+    private int _attackPerLevel;
 
     private void Awake()
     {
         _level = 0;
         _baseUpgradeCost = 10;
-        _strengthIncreasePerLevel = 5;
+        _attackPerLevel = 5;
         _costIncreasePerLevel = 20;
-        
+
         CalculateNeededCost();
     }
 
@@ -37,7 +37,8 @@ public class StrengthUpgradeSystem : MonoBehaviour
 
     private void Upgrade()
     {
-        // Strength Plus
+        _level++;
+        PlayerCharacter.IncreaseAttack(_attackPerLevel);
     }
 
     private void CalculateNeededCost()

@@ -77,7 +77,7 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
             Attack(target);
             yield return wait;
         }
-        
+
         OnAttackPerformed?.Invoke("Attack End");
     }
 
@@ -93,5 +93,10 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
         string message = $"{(isCritical ? "critical" : "")} attacked {damage} damage to {enemy.name}";
         enemy.TakeDamage(damage);
         OnAttackPerformed?.Invoke(message);
+    }
+
+    public void IncreaseAttack(int amount)
+    {
+        CurrentAttack += amount;
     }
 }
