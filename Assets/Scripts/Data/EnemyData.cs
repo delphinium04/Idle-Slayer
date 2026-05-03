@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyData : ScriptableObject
 {
     public string Name;
-    public int Gold;
+    public int GoldReward;
     public int Health;
     public int Strength;
     public int Defense;
