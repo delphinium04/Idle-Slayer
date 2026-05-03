@@ -31,7 +31,7 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
 
     #endregion
 
-    public float CurrentStrength { get; private set; }
+    public float CurrentAttack { get; private set; }
     public float CurrentAttackSpeed { get; private set; }
     public float CurrentCriticalChance { get; private set; }
     public float CurrentCriticalDamage { get; private set; }
@@ -60,7 +60,7 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
     {
         MaxHealth = Data.DefaultStats.Health;
         CurrentHealth = Data.DefaultStats.Health;
-        CurrentStrength = Data.DefaultStats.Strength;
+        CurrentAttack = Data.DefaultStats.Attack;
         CurrentAttackSpeed = Data.DefaultStats.AttackSpeed;
         CurrentCriticalChance = Data.DefaultStats.CriticalChance;
         CurrentCriticalDamage = Data.DefaultStats.CriticalDamage;
@@ -83,7 +83,7 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
 
     private void Attack(EnemyCharacter enemy)
     {
-        float damage = CurrentStrength;
+        float damage = CurrentAttack;
         bool isCritical = CurrentCriticalChance > Random.Range(0, 1.0f);
         if (isCritical)
         {

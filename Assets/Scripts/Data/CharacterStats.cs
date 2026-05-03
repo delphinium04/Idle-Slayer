@@ -2,7 +2,7 @@
 public class CharacterStats
 {
     public int Health;
-    public int Strength;
+    public int Attack;
     public float CriticalChance;
     public float CriticalDamage;
     public float AttackSpeed;

@@ -32,7 +32,7 @@ public class EnemyCharacter : MonoBehaviour, IDamageable
 
     #endregion
 
-    public int CurrentStrength { get; private set; }
+    public int CurrentAttack { get; private set; }
     public int CurrentDefense { get; private set; }
 
     private void Awake()
@@ -45,7 +45,7 @@ public class EnemyCharacter : MonoBehaviour, IDamageable
         if (Data != null)
         {
             CurrentHealth = Data.Health;
-            CurrentStrength = Data.Strength;
+            CurrentAttack = Data.Attack;
             CurrentDefense = Data.Defense;
         }
     }

@@ -6,6 +6,6 @@ public class EnemyData : ScriptableObject
     public string Name;
     public int GoldReward;
     public int Health;
-    public int Strength;
+    public int Attack;
     public int Defense;
 }
