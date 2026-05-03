@@ -34,6 +34,26 @@
 스킬 시스템
 UI 개선
 데이터 기반 구조
+
+1. 기본 데미지 계산식
+Damage = AttackPower
+
+초기 MVP에서는 공격력 그대로 데미지로 쓰면 충분합니다.
+
+2. 크리티컬 계산식
+크리티컬 여부
+IsCritical = Random(0~1) < CriticalChance
+최종 데미지
+FinalDamage = IsCritical
+    ? Damage × (1 + CriticalDamage / 100)
+    : Damage
+
+3. 공격속도 계산식
+
+AttackSpeed를 초당 공격 횟수로 잡는 걸 추천합니다.
+
+AttackInterval = 1 / AttackSpeed
+
 🧱 2. 개발 단계
 🔥 1단계: MVP (가장 중요)
 
