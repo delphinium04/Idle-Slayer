@@ -3,11 +3,34 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class PlayerCharacter : MonoBehaviour
+public class PlayerCharacter : MonoBehaviour, IDamageable
 {
     public CharacterData Data;
 
+    #region IDamageable
+
     public float CurrentHealth { get; private set; }
+    public float MaxHealth { get; private set; }
+    public bool IsAlive { get; private set; }
+
+    public event Action OnDeath;
+    public event Action<float> OnDamageTaken;
+
+    public void TakeDamage(float damage)
+    {
+        CurrentHealth -= damage;
+        OnDamageTaken?.Invoke(damage);
+
+        if (CurrentHealth <= 0)
+        {
+            CurrentHealth = 0;
+            IsAlive = false;
+            OnDeath?.Invoke();
+        }
+    }
+
+    #endregion
+
     public float CurrentStrength { get; private set; }
     public float CurrentAttackSpeed { get; private set; }
     public float CurrentCriticalChance { get; private set; }
@@ -20,6 +43,8 @@ public class PlayerCharacter : MonoBehaviour
     private void Awake()
     {
         _enemyTargetFinder = GetComponent<EnemyTargetFinder>();
+
+        IsAlive = true;
     }
 
     private void Start()
@@ -33,6 +58,7 @@ public class PlayerCharacter : MonoBehaviour
 
     private void InitData()
     {
+        MaxHealth = Data.DefaultStats.Health;
         CurrentHealth = Data.DefaultStats.Health;
         CurrentStrength = Data.DefaultStats.Strength;
         CurrentAttackSpeed = Data.DefaultStats.AttackSpeed;
@@ -51,6 +77,8 @@ public class PlayerCharacter : MonoBehaviour
             Attack(target);
             yield return wait;
         }
+        
+        OnAttackPerformed?.Invoke("Attack End");
     }
 
     private void Attack(EnemyCharacter enemy)
@@ -62,7 +90,7 @@ public class PlayerCharacter : MonoBehaviour
             damage *= (100 + CurrentCriticalDamage) * 0.01f;
         }
 
-        string message = $"{(isCritical ? "critical" : "")} attacked (<color=red>{damage}</color>) to {enemy.name}";
+        string message = $"{(isCritical ? "critical" : "")} attacked {damage} damage to {enemy.name}";
         enemy.TakeDamage(damage);
         OnAttackPerformed?.Invoke(message);
     }
