@@ -7,13 +7,20 @@ public class PlayerCharacter : MonoBehaviour
 {
     public CharacterData Data;
 
-    public int CurrentHealth { get; private set; }
-    public int CurrentStrength { get; private set; }
+    public float CurrentHealth { get; private set; }
+    public float CurrentStrength { get; private set; }
     public float CurrentAttackSpeed { get; private set; }
     public float CurrentCriticalChance { get; private set; }
     public float CurrentCriticalDamage { get; private set; }
 
     public Action<string> OnAttackPerformed;
+
+    private EnemyTargetFinder _enemyTargetFinder;
+
+    private void Awake()
+    {
+        _enemyTargetFinder = GetComponent<EnemyTargetFinder>();
+    }
 
     private void Start()
     {
@@ -38,12 +45,15 @@ public class PlayerCharacter : MonoBehaviour
         YieldInstruction wait = new WaitForSeconds(1 / CurrentAttackSpeed);
         for (int i = 0; i < 100; i++)
         {
-            Attack();
+            EnemyCharacter target = _enemyTargetFinder.GetTarget();
+            if (target == null) break;
+
+            Attack(target);
             yield return wait;
         }
     }
 
-    private void Attack()
+    private void Attack(EnemyCharacter enemy)
     {
         float damage = CurrentStrength;
         bool isCritical = CurrentCriticalChance > Random.Range(0, 1.0f);
@@ -52,7 +62,8 @@ public class PlayerCharacter : MonoBehaviour
             damage *= (100 + CurrentCriticalDamage) * 0.01f;
         }
 
-        string message = $"{(isCritical ? "critical" : "")} attacked, <color=red>{damage}</color>";
+        string message = $"{(isCritical ? "critical" : "")} attacked (<color=red>{damage}</color>) to {enemy.name}";
+        enemy.TakeDamage(damage);
         OnAttackPerformed?.Invoke(message);
     }
 }

@@ -4645,7 +4645,7 @@ GameObject:
   - component: {fileID: 7324388722286917963}
   - component: {fileID: 7367064500373898337}
   m_Layer: 0
-  m_Name: SampleSprite
+  m_Name: PlayerSampleSPUM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
