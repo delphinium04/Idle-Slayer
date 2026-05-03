@@ -18,7 +18,7 @@ MonoBehaviour:
   DefaultStats:
     Health: 10
     Strength: 3
-    CriticalChance: 55.5
+    CriticalChance: 0.5
     CriticalDamage: 50
-    AttackSpeed: 1
+    AttackSpeed: 3
   Skill: {fileID: 11400000, guid: e389547f5b0f2411d98c295f025982d7, type: 2}
