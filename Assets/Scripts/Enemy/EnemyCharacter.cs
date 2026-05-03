@@ -11,7 +11,7 @@ public class EnemyCharacter : MonoBehaviour, IDamageable
     public float MaxHealth { get; private set; }
     public bool IsAlive { get; private set; }
 
-    public event Action OnDeath;
+    public event Action<IDamageable> OnDeath;
     public event Action<float> OnDamageTaken;
 
     public void TakeDamage(float damage)
@@ -23,7 +23,7 @@ public class EnemyCharacter : MonoBehaviour, IDamageable
         {
             CurrentHealth = 0;
             IsAlive = false;
-            OnDeath?.Invoke();
+            OnDeath?.Invoke(this);
         }
     }
 
