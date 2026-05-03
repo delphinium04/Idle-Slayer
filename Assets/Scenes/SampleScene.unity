@@ -171,10 +171,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySample (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 8403114453351167567, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
-      propertyPath: Data
-      value: 
-      objectReference: {fileID: 11400000, guid: e3e4842064a984e53910eda11e645fe2, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -701,6 +697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13fab5045feb46c284d4da32d0a3db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoldWallet
+  <CurrentGold>k__BackingField: 0
 --- !u!1 &776618353
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,26 +1142,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySample
       objectReference: {fileID: 0}
-    - target: {fileID: 8403114453351167567, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
-      propertyPath: Data
-      value: 
-      objectReference: {fileID: 11400000, guid: e3e4842064a984e53910eda11e645fe2, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
---- !u!114 &5371529886649168774 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8403114453351167567, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
-  m_PrefabInstance: {fileID: 5371529886649168773}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54929081ff2dd4ca7a20508c30efbae0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!1001 &6254132771746686129
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1217,14 +1199,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8831170245805297358, guid: ab0e52ab17eb3403d93329c85233880b, type: 3}
-      propertyPath: Data
-      value: 
-      objectReference: {fileID: 11400000, guid: cdec819080304456db8a16ccc7fe0235, type: 2}
-    - target: {fileID: 8831170245805297358, guid: ab0e52ab17eb3403d93329c85233880b, type: 3}
-      propertyPath: TargetEnemy
-      value: 
-      objectReference: {fileID: 5371529886649168774}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

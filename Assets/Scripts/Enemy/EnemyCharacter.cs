@@ -16,6 +16,8 @@ public class EnemyCharacter : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
+        if (CurrentHealth == 0) return;
+
         CurrentHealth -= damage;
         OnDamageTaken?.Invoke(damage);
 
@@ -24,6 +26,7 @@ public class EnemyCharacter : MonoBehaviour, IDamageable
             CurrentHealth = 0;
             IsAlive = false;
             OnDeath?.Invoke(this);
+            transform.localScale = Vector3.one * 0.5f;
         }
     }
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GoldWallet : MonoBehaviour
 {
-    public int CurrentGold { get; private set; }
+    [field:SerializeField] public int CurrentGold { get; private set; }
 
     private void Awake()
     {
