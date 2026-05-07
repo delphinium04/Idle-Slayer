@@ -5,7 +5,7 @@ public interface IDamageable
     public bool IsAlive { get; }
 
     public event System.Action<IDamageable> OnDeath;
-    public event System.Action<float> OnDamageTaken;
+    public event System.Action<DamageInfo> OnDamageTaken;
 
-    public void TakeDamage(float damage);
+    public void TakeDamage(DamageInfo result);
 }

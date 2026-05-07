@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class EnemyCharacter : MonoBehaviour, IDamageable
+public class EnemyCharacter : MonoBehaviour, IDamageable, IAttacker
 {
     public EnemyData Data;
 
@@ -12,14 +12,14 @@ public class EnemyCharacter : MonoBehaviour, IDamageable
     public bool IsAlive { get; private set; }
 
     public event Action<IDamageable> OnDeath;
-    public event Action<float> OnDamageTaken;
+    public event Action<DamageInfo> OnDamageTaken;
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(DamageInfo result)
     {
         if (CurrentHealth == 0) return;
 
-        CurrentHealth -= damage;
-        OnDamageTaken?.Invoke(damage);
+        CurrentHealth -= result.Damage;
+        OnDamageTaken?.Invoke(result);
 
         if (CurrentHealth <= 0)
         {
@@ -29,6 +29,12 @@ public class EnemyCharacter : MonoBehaviour, IDamageable
             transform.localScale = Vector3.one * 0.5f;
         }
     }
+
+    #endregion
+
+    #region IAttacker
+
+    public string AttackerName => Data.Name;
 
     #endregion
 

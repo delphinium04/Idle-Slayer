@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class PlayerCharacter : MonoBehaviour, IDamageable
+public class PlayerCharacter : MonoBehaviour, IDamageable, IAttacker
 {
     public CharacterData Data;
 
@@ -14,12 +14,12 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
     public bool IsAlive { get; private set; }
 
     public event Action<IDamageable> OnDeath;
-    public event Action<float> OnDamageTaken;
+    public event Action<DamageInfo> OnDamageTaken;
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(DamageInfo result)
     {
-        CurrentHealth -= damage;
-        OnDamageTaken?.Invoke(damage);
+        CurrentHealth -= result.Damage;
+        OnDamageTaken?.Invoke(result);
 
         if (CurrentHealth <= 0)
         {
@@ -31,12 +31,16 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
 
     #endregion
 
+    #region IAttacker
+
+    public string AttackerName => Data.Name;
+
+    #endregion
+
     public float CurrentAttack { get; private set; }
     public float CurrentAttackSpeed { get; private set; }
     public float CurrentCriticalChance { get; private set; }
     public float CurrentCriticalDamage { get; private set; }
-
-    public Action<string> OnAttackPerformed;
 
     private EnemyTargetFinder _enemyTargetFinder;
 
@@ -77,8 +81,6 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
             Attack(target);
             yield return wait;
         }
-
-        OnAttackPerformed?.Invoke("Attack End");
     }
 
     private void Attack(EnemyCharacter enemy)
@@ -90,9 +92,8 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
             damage *= (100 + CurrentCriticalDamage) * 0.01f;
         }
 
-        string message = $"{(isCritical ? "critical" : "")} attacked {damage} damage to {enemy.name}";
-        enemy.TakeDamage(damage);
-        OnAttackPerformed?.Invoke(message);
+        DamageInfo damageInfo = new DamageInfo(this, enemy, damage, isCritical);
+        enemy.TakeDamage(damageInfo);
     }
 
     public void IncreaseAttack(int amount)

@@ -22,7 +22,6 @@ public class SamplePlayerUI : MonoBehaviour
         if (PlayerCharacter != null)
         {
             RefreshStat();
-            PlayerCharacter.OnAttackPerformed += PrintAttackLog;
         }
 
         if (GoldWallet != null)
@@ -38,6 +37,12 @@ public class SamplePlayerUI : MonoBehaviour
         }
     }
 
+    public void PrintAttackLog(DamageInfo log)
+    {
+        attackLog.text =
+            $"{log.Attacker.AttackerName}->{log.Target}: {log.Damage} {(log.IsCritical ? "critical" : "normal")}";
+    }
+
     private void RefreshGold(int amount)
     {
         gold.text = $"{amount} Gold";
@@ -49,11 +54,6 @@ public class SamplePlayerUI : MonoBehaviour
         {
             attack.text = $"Attack: {PlayerCharacter.CurrentAttack}";
         }
-    }
-
-    private void PrintAttackLog(string log)
-    {
-        attackLog.text = log;
     }
 
     private void RefreshUpgradeSystem()

@@ -15,8 +15,16 @@ public class RewardHandler : MonoBehaviour
         foreach (var enemy in enemies)
         {
             enemy.OnDeath += EnemyCharacter_OnDeath;
+            enemy.OnDamageTaken += EnemyCharacter_OnDamageTaken;
         }
     }
+
+    public SamplePlayerUI SampleUI;
+    private void EnemyCharacter_OnDamageTaken(DamageInfo obj)
+    {
+        SampleUI.PrintAttackLog(obj);
+    }
+
 
     private void EnemyCharacter_OnDeath(IDamageable damageable)
     {
@@ -26,4 +34,5 @@ public class RewardHandler : MonoBehaviour
             GoldWallet.Add(enemy.Data.GoldReward);
         }
     }
+    
 }
