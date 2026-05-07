@@ -72,14 +72,22 @@ public class PlayerCharacter : MonoBehaviour, IDamageable, IAttacker
 
     private IEnumerator AttackRoutine()
     {
-        YieldInstruction wait = new WaitForSeconds(1 / CurrentAttackSpeed);
-        for (int i = 0; i < 100; i++)
+        YieldInstruction attackYield = new WaitForSeconds(1 / CurrentAttackSpeed);
+        float previousAttackSpeed = CurrentAttackSpeed;
+
+        while (IsAlive)
         {
+            if (!Mathf.Approximately(previousAttackSpeed, CurrentAttackSpeed))
+            {
+                attackYield = new WaitForSeconds(1 / CurrentAttackSpeed);
+                previousAttackSpeed = CurrentAttackSpeed;
+            }
+
             EnemyCharacter target = _enemyTargetFinder.GetTarget();
             if (target == null) break;
 
             Attack(target);
-            yield return wait;
+            yield return attackYield;
         }
     }
 
