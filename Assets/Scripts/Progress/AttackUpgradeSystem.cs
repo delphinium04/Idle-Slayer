@@ -39,6 +39,7 @@ public class AttackUpgradeSystem : MonoBehaviour
     {
         _level++;
         PlayerCharacter.IncreaseAttack(_attackPerLevel);
+        CalculateNeededCost();
     }
 
     private void CalculateNeededCost()
