@@ -1345,6 +1345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RewardHandler
   GoldWallet: {fileID: 714099725}
+  SampleUI: {fileID: 776618354}
 --- !u!4 &1540787056
 Transform:
   m_ObjectHideFlags: 0
@@ -1473,7 +1474,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -83.70001}
+  m_AnchoredPosition: {x: 0, y: -83.700195}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1584669121
