@@ -7,15 +7,18 @@ public class SamplePlayerUI : MonoBehaviour
     public PlayerCharacter PlayerCharacter;
     public GoldWallet GoldWallet;
     public AttackUpgradeSystem AttackUpgradeSystem;
+    public AttackSpeedUpgradeSystem AttackSpeedUpgradeSystem;
 
     [Header("Texts")]
     [SerializeField] private TextMeshProUGUI gold;
-    [SerializeField] private TextMeshProUGUI attack;
+    [SerializeField] private TextMeshProUGUI stats;
     [SerializeField] private TextMeshProUGUI attackLog;
     [SerializeField] private TextMeshProUGUI attackUpgradeCost;
+    [SerializeField] private TextMeshProUGUI attackSpeedUpgradeCost;
 
     [Header("Buttons")]
-    [SerializeField] private Button upgradeStrength;
+    [SerializeField] private Button upgradeAttack;
+    [SerializeField] private Button upgradeAttackSpeed;
 
     private void Start()
     {
@@ -33,7 +36,13 @@ public class SamplePlayerUI : MonoBehaviour
         if (AttackUpgradeSystem != null)
         {
             RefreshUpgradeSystem();
-            upgradeStrength.onClick.AddListener(UpgradeStrength);
+            upgradeAttack.onClick.AddListener(UpgradeAttack);
+        }
+
+        if (AttackSpeedUpgradeSystem != null)
+        {
+            RefreshUpgradeSystem();
+            upgradeAttackSpeed.onClick.AddListener(UpgradeAttackSpeed);
         }
     }
 
@@ -52,29 +61,43 @@ public class SamplePlayerUI : MonoBehaviour
     {
         if (PlayerCharacter != null)
         {
-            attack.text = $"Attack: {PlayerCharacter.CurrentAttack}";
+            stats.text = $"Attack: {PlayerCharacter.CurrentAttack}\nAttackSpeed: {PlayerCharacter.CurrentAttackSpeed}";
         }
     }
 
     private void RefreshUpgradeSystem()
     {
-        attackUpgradeCost.text = $"Upgrade cost: {AttackUpgradeSystem.CurrentUpgradeCost}";
+        attackUpgradeCost.text = $"Atk upgrade cost: {AttackUpgradeSystem.CurrentUpgradeCost}";
+        attackSpeedUpgradeCost.text = $"AtkSpeed upgrade cost: {AttackSpeedUpgradeSystem.CurrentUpgradeCost}";
     }
 
-    private void UpgradeStrength()
+    private void UpgradeAttack()
     {
-        if (AttackUpgradeSystem != null)
+        if (AttackUpgradeSystem == null) return;
+
+        if (AttackUpgradeSystem.TryUpgrade())
         {
-            bool succeed = AttackUpgradeSystem.TryUpgrade();
-            if (succeed)
-            {
-                RefreshStat();
-                RefreshUpgradeSystem();
-            }
-            else
-            {
-                Debug.Log($"Failed to upgrade");
-            }
+            RefreshStat();
+            RefreshUpgradeSystem();
+        }
+        else
+        {
+            Debug.Log($"Attack upgrading failed: Gold");
+        }
+    }
+
+    private void UpgradeAttackSpeed()
+    {
+        if (AttackSpeedUpgradeSystem == null) return;
+        ;
+        if (AttackSpeedUpgradeSystem.TryUpgrade())
+        {
+            RefreshStat();
+            RefreshUpgradeSystem();
+        }
+        else
+        {
+            Debug.Log($"Attack speed upgrading failed: Gold");
         }
     }
 }

@@ -108,4 +108,9 @@ public class PlayerCharacter : MonoBehaviour, IDamageable, IAttacker
     {
         CurrentAttack += amount;
     }
+
+    public void IncreaseAttackSpeed(float amount)
+    {
+        CurrentAttackSpeed += amount;
+    }
 }

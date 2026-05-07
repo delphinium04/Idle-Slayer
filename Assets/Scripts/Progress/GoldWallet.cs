@@ -3,12 +3,13 @@ using UnityEngine;
 
 public class GoldWallet : MonoBehaviour
 {
+    public int DefaultGold = 1000;
     public int CurrentGold { get; private set; }
     public event Action<int> OnGoldChanged;
 
     private void Awake()
     {
-        CurrentGold = 100;
+        CurrentGold = DefaultGold;
     }
 
     public bool CanSpend(int cost)
