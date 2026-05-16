@@ -11,7 +11,7 @@ public class EnemyTargetFinder : MonoBehaviour
         var minDistance = -1f;
         for (int i = 0; i < enemies.Length; i++)
         {
-            if (!enemies[i].IsAlive) continue;
+            if (!enemies[i].Health.IsAlive) continue;
 
             var dist = (transform.position - enemies[i].transform.position).sqrMagnitude;
             if (dist < minDistance || returnIndex == -1)

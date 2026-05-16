@@ -3,28 +3,23 @@ using UnityEngine;
 
 public class EnemyCharacter : MonoBehaviour, IDamageable, IAttacker
 {
-    public EnemyData Data;
+    [field: SerializeField] public EnemyData Data { get; private set; }
+    public Health Health { get; private set; }
 
     #region IDamageable
-
-    public float CurrentHealth { get; private set; }
-    public float MaxHealth { get; private set; }
-    public bool IsAlive { get; private set; }
 
     public event Action<IDamageable> OnDeath;
     public event Action<DamageInfo> OnDamageTaken;
 
     public void TakeDamage(DamageInfo result)
     {
-        if (CurrentHealth == 0) return;
+        if (!Health.IsAlive) return;
 
-        CurrentHealth -= result.Damage;
+        Health.CurrentHealth -= result.Damage;
         OnDamageTaken?.Invoke(result);
 
-        if (CurrentHealth <= 0)
+        if (!Health.IsAlive)
         {
-            CurrentHealth = 0;
-            IsAlive = false;
             OnDeath?.Invoke(this);
             transform.localScale = Vector3.one * 0.5f;
         }
@@ -43,16 +38,15 @@ public class EnemyCharacter : MonoBehaviour, IDamageable, IAttacker
 
     private void Awake()
     {
-        IsAlive = true;
+        Health = new Health();
     }
 
     void Start()
     {
         if (Data != null)
         {
-            CurrentHealth = Data.Health;
-            CurrentAttack = Data.Attack;
-            CurrentDefense = Data.Defense;
+            Health.MaxHealth = Data.Health;
+            Health.CurrentHealth = Data.Health;
         }
     }
 }

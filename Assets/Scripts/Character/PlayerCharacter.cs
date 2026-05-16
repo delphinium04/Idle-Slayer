@@ -7,24 +7,27 @@ public class PlayerCharacter : MonoBehaviour, IDamageable, IAttacker
 {
     public CharacterData Data;
 
-    #region IDamageable
+    public Health Health { get; private set; }
 
-    public float CurrentHealth { get; private set; }
-    public float MaxHealth { get; private set; }
-    public bool IsAlive { get; private set; }
+    public float CurrentAttack { get; private set; }
+    public float CurrentAttackSpeed { get; private set; }
+    public float CurrentCriticalChance { get; private set; }
+    public float CurrentCriticalDamage { get; private set; }
+
+    private EnemyTargetFinder _enemyTargetFinder;
+
+    #region IDamageable
 
     public event Action<IDamageable> OnDeath;
     public event Action<DamageInfo> OnDamageTaken;
 
     public void TakeDamage(DamageInfo result)
     {
-        CurrentHealth -= result.Damage;
+        Health.CurrentHealth -= result.Damage;
         OnDamageTaken?.Invoke(result);
 
-        if (CurrentHealth <= 0)
+        if (Health.IsAlive)
         {
-            CurrentHealth = 0;
-            IsAlive = false;
             OnDeath?.Invoke(this);
         }
     }
@@ -37,18 +40,10 @@ public class PlayerCharacter : MonoBehaviour, IDamageable, IAttacker
 
     #endregion
 
-    public float CurrentAttack { get; private set; }
-    public float CurrentAttackSpeed { get; private set; }
-    public float CurrentCriticalChance { get; private set; }
-    public float CurrentCriticalDamage { get; private set; }
-
-    private EnemyTargetFinder _enemyTargetFinder;
-
     private void Awake()
     {
         _enemyTargetFinder = GetComponent<EnemyTargetFinder>();
-
-        IsAlive = true;
+        Health = new Health();
     }
 
     private void Start()
@@ -62,8 +57,8 @@ public class PlayerCharacter : MonoBehaviour, IDamageable, IAttacker
 
     private void InitData()
     {
-        MaxHealth = Data.DefaultStats.Health;
-        CurrentHealth = Data.DefaultStats.Health;
+        Health.MaxHealth = Data.DefaultStats.Health;
+        Health.CurrentHealth = Data.DefaultStats.Health;
         CurrentAttack = Data.DefaultStats.Attack;
         CurrentAttackSpeed = Data.DefaultStats.AttackSpeed;
         CurrentCriticalChance = Data.DefaultStats.CriticalChance;
@@ -75,7 +70,7 @@ public class PlayerCharacter : MonoBehaviour, IDamageable, IAttacker
         YieldInstruction attackYield = new WaitForSeconds(1 / CurrentAttackSpeed);
         float previousAttackSpeed = CurrentAttackSpeed;
 
-        while (IsAlive)
+        while (Health.IsAlive)
         {
             if (!Mathf.Approximately(previousAttackSpeed, CurrentAttackSpeed))
             {
