@@ -6,6 +6,8 @@ public class EnemyCharacter : MonoBehaviour, IDamageable, IAttacker
     [field: SerializeField] public EnemyData Data { get; private set; }
     public Health Health { get; private set; }
 
+    [SerializeField] private HealthBarUI _healthBarUI;
+
     #region IDamageable
 
     public event Action<IDamageable> OnDeath;
@@ -39,6 +41,12 @@ public class EnemyCharacter : MonoBehaviour, IDamageable, IAttacker
     private void Awake()
     {
         Health = new Health();
+
+        // Temp health bar
+        if (_healthBarUI != null)
+        {
+            _healthBarUI.Initialize(Health);
+        }
     }
 
     void Start()

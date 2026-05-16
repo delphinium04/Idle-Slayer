@@ -609,9 +609,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6056908894637511754, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191382202154237320, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6793229019371757800, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
       propertyPath: m_Name
       value: EnemySample (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7215816723805914792, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7982086085569472505, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1265,6 +1281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13fab5045feb46c284d4da32d0a3db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoldWallet
+  DefaultGold: 1000
 --- !u!1 &776618353
 GameObject:
   m_ObjectHideFlags: 0
@@ -2083,9 +2100,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6056908894637511754, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191382202154237320, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6793229019371757800, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
       propertyPath: m_Name
       value: EnemySample (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7215816723805914792, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7982086085569472505, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2140,9 +2173,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6056908894637511754, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191382202154237320, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6793229019371757800, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
       propertyPath: m_Name
       value: EnemySample
+      objectReference: {fileID: 0}
+    - target: {fileID: 7215816723805914792, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7982086085569472505, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

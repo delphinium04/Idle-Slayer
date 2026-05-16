@@ -17,8 +17,8 @@ MonoBehaviour:
   Icon: {fileID: 7194678473495877024, guid: 9f70f3b311741431cbbda23a4cfbc285, type: 3}
   DefaultStats:
     Health: 10
-    Attack: 4
-    CriticalChance: 0.5
+    Attack: 2
+    CriticalChance: 0.3
     CriticalDamage: 50
     AttackSpeed: 1
   Skill: {fileID: 11400000, guid: e389547f5b0f2411d98c295f025982d7, type: 2}
