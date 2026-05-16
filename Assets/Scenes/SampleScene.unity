@@ -377,7 +377,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 81738786}
   m_CullTransparentMesh: 1
---- !u!1 &224466605
+--- !u!1 &174684706
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -385,22 +385,25 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 224466607}
-  - component: {fileID: 224466606}
+  - component: {fileID: 174684711}
+  - component: {fileID: 174684710}
+  - component: {fileID: 174684709}
+  - component: {fileID: 174684708}
+  - component: {fileID: 174684707}
   m_Layer: 0
-  m_Name: AttackSpeedUpgradeSystem
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &224466606
+--- !u!114 &174684707
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 224466605}
+  m_GameObject: {fileID: 174684706}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fcf5c6b108b94e1590a17a8c670770a, type: 3}
@@ -408,14 +411,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AttackSpeedUpgradeSystem
   <CurrentUpgradeCost>k__BackingField: 0
   PlayerCharacter: {fileID: 2018090219}
-  GoldWallet: {fileID: 714099725}
---- !u!4 &224466607
+  GoldWallet: {fileID: 174684710}
+--- !u!114 &174684708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174684706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52d5461ed1f94de985b1ef20df72a098, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackUpgradeSystem
+  <CurrentUpgradeCost>k__BackingField: 0
+  PlayerCharacter: {fileID: 2018090219}
+  GoldWallet: {fileID: 174684710}
+--- !u!114 &174684709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174684706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7721d71add79746329708f849b1b5759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RewardHandler
+  GoldWallet: {fileID: 174684710}
+  SampleUI: {fileID: 776618354}
+--- !u!114 &174684710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174684706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e13fab5045feb46c284d4da32d0a3db3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GoldWallet
+  DefaultGold: 200
+--- !u!4 &174684711
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 224466605}
+  m_GameObject: {fileID: 174684706}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -611,6 +656,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6056908894637511754, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191382202154237320, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6191382202154237320, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
@@ -1237,51 +1286,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 688481408}
   m_CullTransparentMesh: 1
---- !u!1 &714099723
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 714099724}
-  - component: {fileID: 714099725}
-  m_Layer: 0
-  m_Name: GoldWallet
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &714099724
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 714099723}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &714099725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 714099723}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e13fab5045feb46c284d4da32d0a3db3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GoldWallet
-  DefaultGold: 1000
 --- !u!1 &776618353
 GameObject:
   m_ObjectHideFlags: 0
@@ -1312,9 +1316,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SamplePlayerUI
   PlayerCharacter: {fileID: 2018090219}
-  GoldWallet: {fileID: 714099725}
-  AttackUpgradeSystem: {fileID: 921219118}
-  AttackSpeedUpgradeSystem: {fileID: 224466606}
+  GoldWallet: {fileID: 174684710}
+  AttackUpgradeSystem: {fileID: 174684708}
+  AttackSpeedUpgradeSystem: {fileID: 174684707}
   gold: {fileID: 241832038}
   stats: {fileID: 633921384}
   attackLog: {fileID: 1584669121}
@@ -1595,53 +1599,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915903021}
   m_CullTransparentMesh: 1
---- !u!1 &921219116
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 921219117}
-  - component: {fileID: 921219118}
-  m_Layer: 0
-  m_Name: AttackUpgradeSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &921219117
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 921219116}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &921219118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 921219116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52d5461ed1f94de985b1ef20df72a098, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AttackUpgradeSystem
-  <CurrentUpgradeCost>k__BackingField: 0
-  PlayerCharacter: {fileID: 2018090219}
-  GoldWallet: {fileID: 714099725}
 --- !u!1 &1326312906
 GameObject:
   m_ObjectHideFlags: 0
@@ -1779,52 +1736,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1326312906}
   m_CullTransparentMesh: 1
---- !u!1 &1540787054
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1540787056}
-  - component: {fileID: 1540787055}
-  m_Layer: 0
-  m_Name: RewardHandler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1540787055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1540787054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7721d71add79746329708f849b1b5759, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RewardHandler
-  GoldWallet: {fileID: 714099725}
-  SampleUI: {fileID: 776618354}
---- !u!4 &1540787056
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1540787054}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1553317144
 GameObject:
   m_ObjectHideFlags: 0
@@ -2041,6 +1952,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1584669118}
   m_CullTransparentMesh: 1
+--- !u!1 &1909484659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1909484660}
+  - component: {fileID: 1909484661}
+  m_Layer: 0
+  m_Name: ProgressController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1909484660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909484659}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1909484661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909484659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfb7dace4605c4cf2a3e30ed73ac9d86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProgressController
+  _goldWallet: {fileID: 174684710}
 --- !u!114 &2018090219 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8831170245805297358, guid: ab0e52ab17eb3403d93329c85233880b, type: 3}
@@ -2102,6 +2058,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6056908894637511754, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191382202154237320, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6191382202154237320, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
@@ -2175,6 +2135,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6056908894637511754, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191382202154237320, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6191382202154237320, guid: d1adf273a3aae4869b52fd5f6e416ac9, type: 3}
@@ -2259,10 +2223,8 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 714099724}
-  - {fileID: 1540787056}
-  - {fileID: 921219117}
-  - {fileID: 224466607}
+  - {fileID: 174684711}
+  - {fileID: 1909484660}
   - {fileID: 776618355}
   - {fileID: 519420032}
   - {fileID: 619394802}
