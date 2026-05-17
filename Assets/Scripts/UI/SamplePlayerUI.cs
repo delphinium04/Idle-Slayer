@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,6 +21,14 @@ public class SamplePlayerUI : MonoBehaviour
     [SerializeField] private Button upgradeAttack;
     [SerializeField] private Button upgradeAttackSpeed;
 
+    private void Awake()
+    {
+        if (GoldWallet != null)
+        {
+            GoldWallet.OnGoldChanged += RefreshGold;
+        }
+    }
+
     private void Start()
     {
         if (PlayerCharacter != null)
@@ -29,7 +38,6 @@ public class SamplePlayerUI : MonoBehaviour
 
         if (GoldWallet != null)
         {
-            GoldWallet.OnGoldChanged += RefreshGold;
             RefreshGold(GoldWallet.CurrentGold);
         }
 

@@ -3,13 +3,23 @@ using UnityEngine;
 
 public class GoldWallet : MonoBehaviour
 {
-    public int DefaultGold = 1000;
-    public int CurrentGold { get; private set; }
+    public int CurrentGold
+    {
+        get => _currentGold;
+        private set
+        {
+            if (_currentGold == value) return;
+
+            _currentGold = value;
+            OnGoldChanged?.Invoke(CurrentGold);
+        }
+    }
+    private int _currentGold;
     public event Action<int> OnGoldChanged;
 
-    private void Awake()
+    public void Initialize(int gold)
     {
-        CurrentGold = DefaultGold;
+        CurrentGold = gold;
     }
 
     public bool CanSpend(int cost)
@@ -28,4 +38,14 @@ public class GoldWallet : MonoBehaviour
         CurrentGold -= cost;
         OnGoldChanged?.Invoke(CurrentGold);
     }
+
+    #if UNITY_EDITOR
+    private void Update()
+    {
+        if(UnityEngine.InputSystem.Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            Add(150);
+        }
+    }
+    #endif
 }

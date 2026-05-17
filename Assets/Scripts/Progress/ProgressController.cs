@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class ProgressController : MonoBehaviour
@@ -7,23 +6,22 @@ public class ProgressController : MonoBehaviour
 
     private SaveData _saveData;
 
-    private void Awake()
+    private void Start()
     {
-        _saveData = new SaveData()
+        if (!SaveManager.TryLoad(out _saveData))
         {
-            Gold = 0,
-            AtkLevel = 0,
-            AtkSpeedLevel = 0,
-            LastLoginTime = null
-        };
+            Debug.LogWarning("Failed to find save data, create new one");
+            _saveData = new SaveData
+            {
+                Gold = 100
+            };
+        }
 
         if (_goldWallet != null)
         {
+            _goldWallet.Initialize(_saveData.Gold);
             _goldWallet.OnGoldChanged += GoldWallet_OnGoldChanged;
         }
-        
-        Debug.Log(Application.persistentDataPath);
-        Debug.Log(Application.dataPath);
     }
 
     private void GoldWallet_OnGoldChanged(int gold)

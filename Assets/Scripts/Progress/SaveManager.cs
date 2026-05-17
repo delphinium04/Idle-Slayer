@@ -6,29 +6,30 @@ public static class SaveManager
 
     public static void Save(SaveData data)
     {
+        if (data == null) return;
         string json = UnityEngine.JsonUtility.ToJson(data, true);
 
-        _path = System.IO.Path.Combine(
-#if UNITY_EDITOR
-            UnityEngine.Application.dataPath,
-#else
-            UnityEngine.Application.persistentDataPath,
-#endif
-
-            "Saved", "SaveData.json");
-        System.IO.Directory.CreateDirectory(_path);
+        SetPath();
         System.IO.File.WriteAllText(_path, json);
     }
 
-    public static SaveData Load()
+    public static bool TryLoad(out SaveData saveData)
     {
-        // string json = "";
-        // if (File.Exists(_path))
-        // {
-        //     json = File.ReadAllText(_path);
-        // }
-        // return JsonUtility.FromJson<SaveData>(json);
+        saveData = null;
+        SetPath();
+        if (!System.IO.File.Exists(_path)) return false;
 
-        return null;
+        var json = System.IO.File.ReadAllText(_path);
+        saveData = JsonUtility.FromJson<SaveData>(json);
+        return true;
+    }
+
+    private static void SetPath()
+    {
+        if (!string.IsNullOrWhiteSpace(_path)) return;
+        
+        _path = System.IO.Path.Combine(
+            UnityEngine.Application.persistentDataPath,
+            "Saved", "SaveData.json");
     }
 }
