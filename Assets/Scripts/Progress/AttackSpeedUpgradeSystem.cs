@@ -1,8 +1,24 @@
+using System;
 using UnityEngine;
 
 public class AttackSpeedUpgradeSystem : MonoBehaviour
 {
     [field: SerializeField] public int CurrentUpgradeCost { get; private set; }
+    public int CurrentLevel
+    {
+        get => _level;
+        private set
+        {
+            if (_level == value) return;
+
+            _level = value;
+            CalculateNeededCost();
+            OnLevelChanged?.Invoke(_level);
+        }
+    }
+
+    public event Action<int> OnLevelChanged;
+
     public PlayerCharacter PlayerCharacter;
     public GoldWallet GoldWallet;
 
@@ -13,7 +29,6 @@ public class AttackSpeedUpgradeSystem : MonoBehaviour
 
     private void Awake()
     {
-        _level = 0;
         _baseUpgradeCost = 10;
         _costIncreasePerLevel = 5;
         _amountPerLevel = 0.1f;
@@ -21,29 +36,40 @@ public class AttackSpeedUpgradeSystem : MonoBehaviour
         CalculateNeededCost();
     }
 
+    public void Initialize(int level)
+    {
+        CurrentLevel = level;
+        PlayerCharacter.IncreaseAttackSpeed(_amountPerLevel);
+    }
+
     public bool TryUpgrade()
     {
         CalculateNeededCost();
+        if (!GoldWallet.CanSpend(CurrentUpgradeCost)) return false;
 
-        if (GoldWallet.CanSpend(CurrentUpgradeCost))
-        {
-            GoldWallet.Spend(CurrentUpgradeCost);
-            Upgrade();
-            return true;
-        }
-
-        return false;
+        GoldWallet.Spend(CurrentUpgradeCost);
+        Upgrade();
+        return true;
     }
 
     private void Upgrade()
     {
-        _level++;
-        PlayerCharacter.IncreaseAttackSpeed(_amountPerLevel);
-        CalculateNeededCost();
+        CurrentLevel++;
+        PlayerCharacter.IncreaseAttackSpeed(CurrentLevel * _amountPerLevel);
     }
 
     private void CalculateNeededCost()
     {
-        CurrentUpgradeCost = _baseUpgradeCost + _level * _costIncreasePerLevel;
+        CurrentUpgradeCost = _baseUpgradeCost + CurrentLevel * _costIncreasePerLevel;
     }
+
+#if UNITY_EDITOR
+    private void Update()
+    {
+        if (UnityEngine.InputSystem.Keyboard.current.f1Key.wasPressedThisFrame)
+        {
+            CurrentLevel = 0;
+        }
+    }
+#endif
 }

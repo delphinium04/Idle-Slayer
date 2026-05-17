@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,6 +26,22 @@ public class SamplePlayerUI : MonoBehaviour
         {
             GoldWallet.OnGoldChanged += RefreshGold;
         }
+
+        if (AttackSpeedUpgradeSystem != null)
+        {
+            AttackSpeedUpgradeSystem.OnLevelChanged += OnUpgradeSystemChanged;
+        }
+
+        if (AttackUpgradeSystem != null)
+        {
+            AttackUpgradeSystem.OnLevelChanged += OnUpgradeSystemChanged;
+        }
+
+        void OnUpgradeSystemChanged(int n)
+        {
+            RefreshUpgradeSystem();
+            RefreshStat();
+        }
     }
 
     private void Start()
@@ -43,13 +58,11 @@ public class SamplePlayerUI : MonoBehaviour
 
         if (AttackUpgradeSystem != null)
         {
-            RefreshUpgradeSystem();
             upgradeAttack.onClick.AddListener(UpgradeAttack);
         }
 
         if (AttackSpeedUpgradeSystem != null)
         {
-            RefreshUpgradeSystem();
             upgradeAttackSpeed.onClick.AddListener(UpgradeAttackSpeed);
         }
     }
@@ -75,8 +88,8 @@ public class SamplePlayerUI : MonoBehaviour
 
     private void RefreshUpgradeSystem()
     {
-        attackUpgradeCost.text = $"Atk upgrade cost: {AttackUpgradeSystem.CurrentUpgradeCost}";
-        attackSpeedUpgradeCost.text = $"AtkSpeed upgrade cost: {AttackSpeedUpgradeSystem.CurrentUpgradeCost}";
+        attackUpgradeCost.text = $"Atk next cost: {AttackUpgradeSystem.CurrentUpgradeCost}";
+        attackSpeedUpgradeCost.text = $"AtkSpeed next cost: {AttackSpeedUpgradeSystem.CurrentUpgradeCost}";
     }
 
     private void UpgradeAttack()

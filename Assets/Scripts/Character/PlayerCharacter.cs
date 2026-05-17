@@ -44,15 +44,15 @@ public class PlayerCharacter : MonoBehaviour, IDamageable, IAttacker
     {
         _enemyTargetFinder = GetComponent<EnemyTargetFinder>();
         Health = new Health();
+        if (Data != null)
+        {
+            InitData();
+        }
     }
 
     private void Start()
     {
-        if (Data != null)
-        {
-            InitData();
-            StartCoroutine(AttackRoutine());
-        }
+        StartCoroutine(AttackRoutine());
     }
 
     private void InitData()
@@ -101,11 +101,11 @@ public class PlayerCharacter : MonoBehaviour, IDamageable, IAttacker
 
     public void IncreaseAttack(int amount)
     {
-        CurrentAttack += amount;
+        CurrentAttack = Data.DefaultStats.Attack + amount;
     }
 
     public void IncreaseAttackSpeed(float amount)
     {
-        CurrentAttackSpeed += amount;
+        CurrentAttackSpeed = Data.DefaultStats.AttackSpeed + amount;
     }
 }
