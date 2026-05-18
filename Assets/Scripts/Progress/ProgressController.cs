@@ -14,16 +14,26 @@ public class ProgressController : MonoBehaviour
         if (!SaveManager.TryLoad(out _saveData))
         {
             Debug.LogWarning("Failed to find save data, create new one");
-            _saveData = new SaveData
-            {
-                Gold = 100,
-                AtkSpeedLevel = 1,
-                AtkLevel = 11,
-            };
+            ResetData();
         }
-        
-        InitializeData();
 
+        InitializeData();
+        SubscribeEvents();
+        CheckOfflineReward();
+    }
+
+    private void CheckOfflineReward()
+    {
+        var currentTime = DateTime.UtcNow;
+        TimeSpan offlineTime = currentTime - _saveData.LastLoginTime;
+        Debug.Log($"미접속 시간: {offlineTime.Hours}H {offlineTime.Minutes}M");
+        if (offlineTime.TotalMinutes < 60) return;
+
+        Debug.Log($"보상 지급: {offlineTime.TotalSeconds:F0}");
+    }
+
+    private void SubscribeEvents()
+    {
         if (goldWallet != null)
         {
             goldWallet.OnGoldChanged += GoldWallet_OnGoldChanged;
@@ -82,21 +92,27 @@ public class ProgressController : MonoBehaviour
         _saveData.Gold = gold;
         SaveManager.Save(_saveData);
     }
+
+    private void OnApplicationQuit()
+    {
+        _saveData.LastLoginTime = System.DateTime.UtcNow;
+        SaveManager.Save(_saveData);
+    }
+
 #if UNITY_EDITOR
     private void Update()
     {
         if (UnityEngine.InputSystem.Keyboard.current.rKey.wasPressedThisFrame)
         {
-            _saveData = new SaveData
-            {
-                Gold = 100,
-                AtkSpeedLevel = 1,
-                AtkLevel = 1
-            };
-            SaveManager.Save(_saveData);
+            ResetData();
             InitializeData();
         }
     }
 
+    [ContextMenu("Reset Data")]
+    public void ResetData()
+    {
+        SaveManager.Save(SaveData.GetDefault());
+    }
 #endif
 }

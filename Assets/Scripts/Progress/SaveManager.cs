@@ -7,10 +7,12 @@ public static class SaveManager
     public static void Save(SaveData data)
     {
         if (data == null) return;
-        string json = UnityEngine.JsonUtility.ToJson(data, true);
+        string json = JsonUtility.ToJson(data, true);
 
         SetPath();
         System.IO.File.WriteAllText(_path, json);
+
+        Debug.Log($"Saved: {json}");
     }
 
     public static bool TryLoad(out SaveData saveData)
@@ -21,15 +23,17 @@ public static class SaveManager
 
         var json = System.IO.File.ReadAllText(_path);
         saveData = JsonUtility.FromJson<SaveData>(json);
+
+        Debug.Log($"Loaded: {json}");
         return true;
     }
 
     private static void SetPath()
     {
         if (!string.IsNullOrWhiteSpace(_path)) return;
-        
+
         _path = System.IO.Path.Combine(
-            UnityEngine.Application.persistentDataPath,
+            Application.persistentDataPath,
             "Saved", "SaveData.json");
     }
 }
