@@ -6,6 +6,7 @@ public class CharacterData : ScriptableObject
     public string Name;
     public string Description;
     public Sprite Icon;
+    public GameObject Model;
 
     public CharacterStats DefaultStats;
     public SkillData Skill;

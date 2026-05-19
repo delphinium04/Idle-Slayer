@@ -2,10 +2,13 @@ using UnityEngine;
 
 public class RewardHandler : MonoBehaviour
 {
-    public GoldWallet GoldWallet;
+    public SamplePlayerUI SampleUI;
 
-    private void Start()
+    GoldWallet _goldWallet;
+
+    public void Initialize(GameContext context)
     {
+        _goldWallet = context.GoldWallet;
         EnemyDeathSubscribeTest();
     }
 
@@ -19,20 +22,17 @@ public class RewardHandler : MonoBehaviour
         }
     }
 
-    public SamplePlayerUI SampleUI;
     private void EnemyCharacter_OnDamageTaken(DamageInfo obj)
     {
         SampleUI.PrintAttackLog(obj);
     }
-
 
     private void EnemyCharacter_OnDeath(IDamageable damageable)
     {
         var enemy = damageable as EnemyCharacter;
         if (enemy != null)
         {
-            GoldWallet.Add(enemy.Data.GoldReward);
+            _goldWallet.Add(enemy.Data.GoldReward);
         }
     }
-    
 }

@@ -1,15 +1,9 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SamplePlayerUI : MonoBehaviour
 {
-    public PlayerCharacter PlayerCharacter;
-    public GoldWallet GoldWallet;
-    public AttackUpgradeSystem AttackUpgradeSystem;
-    public AttackSpeedUpgradeSystem AttackSpeedUpgradeSystem;
-
     [Header("Texts")]
     [SerializeField] private TextMeshProUGUI gold;
     [SerializeField] private TextMeshProUGUI stats;
@@ -22,60 +16,34 @@ public class SamplePlayerUI : MonoBehaviour
     [SerializeField] private Button upgradeAttack;
     [SerializeField] private Button upgradeAttackSpeed;
 
-    private void Awake()
+    private PlayerCharacter _playerCharacter;
+    private GoldWallet _goldWallet;
+    private AttackUpgradeSystem _attackUpgradeSystem;
+    private AttackSpeedUpgradeSystem _attackSpeedUpgradeSystem;
+
+    public void Initialize(GameContext context)
     {
-        if (GoldWallet != null)
-        {
-            GoldWallet.OnGoldChanged += RefreshGold;
-        }
+        _goldWallet = context.GoldWallet;
+        _playerCharacter = context.PlayerCharacter;
+        _attackSpeedUpgradeSystem = context.AttackSpeedUpgradeSystem;
+        _attackUpgradeSystem = context.AttackUpgradeSystem;
 
-        if (AttackSpeedUpgradeSystem != null)
-        {
-            AttackSpeedUpgradeSystem.OnLevelChanged += OnUpgradeSystemChanged;
-        }
+        _goldWallet.OnGoldChanged += RefreshGold;
+        _attackSpeedUpgradeSystem.OnLevelChanged += OnUpgradeSystemChanged;
+        _attackUpgradeSystem.OnLevelChanged += OnUpgradeSystemChanged;
 
-        if (AttackUpgradeSystem != null)
-        {
-            AttackUpgradeSystem.OnLevelChanged += OnUpgradeSystemChanged;
-        }
-
-        if (AttackUpgradeSystem != null)
-        {
-            upgradeAttack.onClick.AddListener(UpgradeAttack);
-        }
-
-        if (AttackSpeedUpgradeSystem != null)
-        {
-            upgradeAttackSpeed.onClick.AddListener(UpgradeAttackSpeed);
-        }
+        upgradeAttack.onClick.AddListener(UpgradeAttack);
+        upgradeAttackSpeed.onClick.AddListener(UpgradeAttackSpeed);
     }
 
     private void OnDestroy()
     {
-        if (GoldWallet != null)
-        {
-            GoldWallet.OnGoldChanged -= RefreshGold;
-        }
+        _goldWallet.OnGoldChanged -= RefreshGold;
+        _attackSpeedUpgradeSystem.OnLevelChanged -= OnUpgradeSystemChanged;
+        _attackUpgradeSystem.OnLevelChanged -= OnUpgradeSystemChanged;
 
-        if (AttackSpeedUpgradeSystem != null)
-        {
-            AttackSpeedUpgradeSystem.OnLevelChanged -= OnUpgradeSystemChanged;
-        }
-
-        if (AttackUpgradeSystem != null)
-        {
-            AttackUpgradeSystem.OnLevelChanged -= OnUpgradeSystemChanged;
-        }
-
-        if (AttackUpgradeSystem != null)
-        {
-            upgradeAttack.onClick.RemoveListener(UpgradeAttack);
-        }
-
-        if (AttackSpeedUpgradeSystem != null)
-        {
-            upgradeAttackSpeed.onClick.RemoveListener(UpgradeAttackSpeed);
-        }
+        upgradeAttack.onClick.RemoveListener(UpgradeAttack);
+        upgradeAttackSpeed.onClick.RemoveListener(UpgradeAttackSpeed);
     }
 
     void OnUpgradeSystemChanged(int n)
@@ -97,33 +65,33 @@ public class SamplePlayerUI : MonoBehaviour
 
     private void RefreshStat()
     {
-        if (PlayerCharacter != null)
+        if (_playerCharacter != null)
         {
-            var atk = PlayerCharacter.CurrentAttack;
-            var atkSpeed = PlayerCharacter.CurrentAttackSpeed;
-            var critRate = PlayerCharacter.CurrentCriticalChance;
-            var critDamage = PlayerCharacter.CurrentCriticalDamage;
+            var atk = _playerCharacter.CurrentAttack;
+            var atkSpeed = _playerCharacter.CurrentAttackSpeed;
+            var critRate = _playerCharacter.CurrentCriticalChance;
+            var critDamage = _playerCharacter.CurrentCriticalDamage;
 
             var dpsValue = (1 - critRate) * atk * atkSpeed
                            + critRate * atk * atkSpeed * (100 + critDamage) / 100f;
-            
+
             stats.text =
-                $"[Atk] {atk} | [AtkSpeed] {atkSpeed}\n[CritRate] {critRate} | [CritDmg] {critDamage}\nHealth: {PlayerCharacter.Health}";
-            dps.text = $"DPS: {dpsValue}";
+                $"[Atk] {atk} | [AtkSpeed] {atkSpeed}\n[CritRate] {critRate} | [CritDmg] {critDamage}\nHealth: {_playerCharacter.Health}";
+            dps.text = $"DPS: {dpsValue:F2}";
         }
     }
 
     private void RefreshUpgradeSystem()
     {
-        attackUpgradeCost.text = $"Upgrade[ATK] {AttackUpgradeSystem.CurrentUpgradeCost}";
-        attackSpeedUpgradeCost.text = $"Upgrade[ATKSPEED]: {AttackSpeedUpgradeSystem.CurrentUpgradeCost}";
+        attackUpgradeCost.text = $"Upgrade[ATK] {_attackUpgradeSystem.CurrentUpgradeCost}";
+        attackSpeedUpgradeCost.text = $"Upgrade[ATKSPEED]: {_attackSpeedUpgradeSystem.CurrentUpgradeCost}";
     }
 
     private void UpgradeAttack()
     {
-        if (AttackUpgradeSystem == null) return;
+        if (_attackUpgradeSystem == null) return;
 
-        if (AttackUpgradeSystem.TryUpgrade())
+        if (_attackUpgradeSystem.TryUpgrade())
         {
             RefreshStat();
             RefreshUpgradeSystem();
@@ -136,9 +104,9 @@ public class SamplePlayerUI : MonoBehaviour
 
     private void UpgradeAttackSpeed()
     {
-        if (AttackSpeedUpgradeSystem == null) return;
+        if (_attackSpeedUpgradeSystem == null) return;
 
-        if (AttackSpeedUpgradeSystem.TryUpgrade())
+        if (_attackSpeedUpgradeSystem.TryUpgrade())
         {
             RefreshStat();
             RefreshUpgradeSystem();

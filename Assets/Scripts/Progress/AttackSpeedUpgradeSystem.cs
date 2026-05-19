@@ -19,8 +19,8 @@ public class AttackSpeedUpgradeSystem : MonoBehaviour
 
     public event Action<int> OnLevelChanged;
 
-    public PlayerCharacter PlayerCharacter;
-    public GoldWallet GoldWallet;
+    private PlayerCharacter _playerCharacter;
+    private GoldWallet _goldWallet;
 
     private int _level;
     private int _baseUpgradeCost;
@@ -36,18 +36,24 @@ public class AttackSpeedUpgradeSystem : MonoBehaviour
         CalculateNeededCost();
     }
 
-    public void Initialize(int level)
+    public void Initialize(GameContext context)
+    {
+        _playerCharacter = context.PlayerCharacter;
+        _goldWallet = context.GoldWallet;
+    }
+
+    public void SetLevel(int level)
     {
         CurrentLevel = level;
-        PlayerCharacter.SetAdditiveAttackSpeed(_amountPerLevel);
+        _playerCharacter.SetAdditiveAttackSpeed(_amountPerLevel);
     }
 
     public bool TryUpgrade()
     {
         CalculateNeededCost();
-        if (!GoldWallet.CanSpend(CurrentUpgradeCost)) return false;
+        if (!_goldWallet.CanSpend(CurrentUpgradeCost)) return false;
 
-        GoldWallet.Spend(CurrentUpgradeCost);
+        _goldWallet.Spend(CurrentUpgradeCost);
         Upgrade();
         return true;
     }
@@ -55,7 +61,7 @@ public class AttackSpeedUpgradeSystem : MonoBehaviour
     private void Upgrade()
     {
         CurrentLevel++;
-        PlayerCharacter.SetAdditiveAttackSpeed(CurrentLevel * _amountPerLevel);
+        _playerCharacter.SetAdditiveAttackSpeed(CurrentLevel * _amountPerLevel);
     }
 
     private void CalculateNeededCost()

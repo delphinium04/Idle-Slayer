@@ -4,23 +4,21 @@ using UnityEngine;
 
 public class ProgressController : MonoBehaviour
 {
-    [SerializeField] private GoldWallet goldWallet;
-    [SerializeField] private AttackSpeedUpgradeSystem atkSpeedUpgradeSystem;
-    [SerializeField] private AttackUpgradeSystem atkUpgradeSystem;
-
     [Header("Offline Popup")]
     [SerializeField] private GameObject goldRewardPopup;
     [SerializeField] private TextMeshProUGUI goldDescription;
 
     private SaveData _saveData;
+    private GoldWallet _goldWallet;
+    private AttackSpeedUpgradeSystem _asus;
+    private AttackUpgradeSystem _aus;
 
-    private void Start()
+    public void Initialize(GameContext context)
     {
-        if (!SaveManager.TryLoad(out _saveData))
-        {
-            Debug.LogWarning("Failed to find save data, create new one");
-            ResetData();
-        }
+        _saveData = context.SaveData;
+        _goldWallet = context.GoldWallet;
+        _asus = context.AttackSpeedUpgradeSystem;
+        _aus = context.AttackUpgradeSystem;
 
         InitializeData();
         SubscribeEvents();
@@ -40,7 +38,7 @@ public class ProgressController : MonoBehaviour
         }
 
         var offlineGold = (int)offlineTime.TotalMinutes;
-        goldWallet.Add(offlineGold);
+        _goldWallet.Add(offlineGold);
         goldDescription.text = $"{offlineGold} gold reward";
         goldRewardPopup.SetActive(true);
         Debug.Log($"보상 지급: {offlineGold}");
@@ -48,45 +46,23 @@ public class ProgressController : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        if (goldWallet != null)
-        {
-            goldWallet.OnGoldChanged += GoldWallet_OnGoldChanged;
-        }
-
-        if (atkSpeedUpgradeSystem != null)
-        {
-            atkSpeedUpgradeSystem.OnLevelChanged += AtkSpeedUpgradeSystem_OnLevelChanged;
-        }
-
-        if (atkUpgradeSystem != null)
-        {
-            atkUpgradeSystem.OnLevelChanged += AtkUpgradeSystem_OnLevelChanged;
-        }
+        _goldWallet.OnGoldChanged += GoldWallet_OnGoldChanged;
+        _asus.OnLevelChanged += AtkSpeedUpgradeSystem_OnLevelChanged;
+        _aus.OnLevelChanged += AtkUpgradeSystem_OnLevelChanged;
     }
 
     private void OnDestroy()
     {
-        if (goldWallet != null)
-        {
-            goldWallet.OnGoldChanged -= GoldWallet_OnGoldChanged;
-        }
-
-        if (atkSpeedUpgradeSystem != null)
-        {
-            atkSpeedUpgradeSystem.OnLevelChanged -= AtkSpeedUpgradeSystem_OnLevelChanged;
-        }
-
-        if (atkUpgradeSystem != null)
-        {
-            atkUpgradeSystem.OnLevelChanged -= AtkUpgradeSystem_OnLevelChanged;
-        }
+        _goldWallet.OnGoldChanged -= GoldWallet_OnGoldChanged;
+        _asus.OnLevelChanged -= AtkSpeedUpgradeSystem_OnLevelChanged;
+        _aus.OnLevelChanged -= AtkUpgradeSystem_OnLevelChanged;
     }
 
     private void InitializeData()
     {
-        goldWallet?.Initialize(_saveData.Gold);
-        atkUpgradeSystem?.Initialize(_saveData.AtkLevel);
-        atkSpeedUpgradeSystem?.Initialize(_saveData.AtkSpeedLevel);
+        _goldWallet.Initialize(_saveData.Gold);
+        _aus.SetLevel(_saveData.AtkLevel);
+        _asus.SetLevel(_saveData.AtkSpeedLevel);
     }
 
     private void AtkSpeedUpgradeSystem_OnLevelChanged(int level)
