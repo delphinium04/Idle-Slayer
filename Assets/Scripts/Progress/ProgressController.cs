@@ -133,7 +133,9 @@ public class ProgressController : MonoBehaviour
     [ContextMenu("Reset Data")]
     public void ResetData()
     {
-        SaveManager.Save(SaveData.GetDefault());
+        var saveData = SaveData.GetDefault();
+        SaveManager.Save(saveData);
+        _saveData = saveData;
     }
 #endif
 }

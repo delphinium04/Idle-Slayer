@@ -40,6 +40,7 @@ public class AttackUpgradeSystem : MonoBehaviour
     public void Initialize(int level)
     {
         CurrentLevel = level;
+        CalculateNeededCost();
         PlayerCharacter.SetAdditiveAttack(_attackPerLevel);
     }
 

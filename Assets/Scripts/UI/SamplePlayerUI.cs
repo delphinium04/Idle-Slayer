@@ -9,7 +9,7 @@ public class SamplePlayerUI : MonoBehaviour
     public GoldWallet GoldWallet;
     public AttackUpgradeSystem AttackUpgradeSystem;
     public AttackSpeedUpgradeSystem AttackSpeedUpgradeSystem;
-    
+
     [Header("Texts")]
     [SerializeField] private TextMeshProUGUI gold;
     [SerializeField] private TextMeshProUGUI stats;
@@ -98,7 +98,8 @@ public class SamplePlayerUI : MonoBehaviour
     {
         if (PlayerCharacter != null)
         {
-            stats.text = $"Attack: {PlayerCharacter.CurrentAttack}\nAttackSpeed: {PlayerCharacter.CurrentAttackSpeed}";
+            stats.text =
+                $"Atk: {PlayerCharacter.CurrentAttack}\nAtkSpeed: {PlayerCharacter.CurrentAttackSpeed}\nHealth: {PlayerCharacter.Health}";
         }
     }
 
@@ -126,7 +127,7 @@ public class SamplePlayerUI : MonoBehaviour
     private void UpgradeAttackSpeed()
     {
         if (AttackSpeedUpgradeSystem == null) return;
-        
+
         if (AttackSpeedUpgradeSystem.TryUpgrade())
         {
             RefreshStat();
