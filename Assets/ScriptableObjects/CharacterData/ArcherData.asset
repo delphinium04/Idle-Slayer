@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72d66695721bb431db61c4c86d3a7c75, type: 3}
-  m_Name: SamplePlayerData
+  m_Name: ArcherData
   m_EditorClassIdentifier: Assembly-CSharp::CharacterData
-  Name: Sample
-  Description: sample knight
+  Name: Archer
+  Description: AD Archer
   Icon: {fileID: 7194678473495877024, guid: 9f70f3b311741431cbbda23a4cfbc285, type: 3}
+  Model: {fileID: 8411708740712034095, guid: 6913d0fc1ec2f4b289a7990fc7bd85ea, type: 3}
   DefaultStats:
     Health: 10
     Attack: 2
