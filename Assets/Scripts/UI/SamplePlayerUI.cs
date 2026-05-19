@@ -13,6 +13,7 @@ public class SamplePlayerUI : MonoBehaviour
     [Header("Texts")]
     [SerializeField] private TextMeshProUGUI gold;
     [SerializeField] private TextMeshProUGUI stats;
+    [SerializeField] private TextMeshProUGUI dps;
     [SerializeField] private TextMeshProUGUI attackLog;
     [SerializeField] private TextMeshProUGUI attackUpgradeCost;
     [SerializeField] private TextMeshProUGUI attackSpeedUpgradeCost;
@@ -98,8 +99,17 @@ public class SamplePlayerUI : MonoBehaviour
     {
         if (PlayerCharacter != null)
         {
+            var atk = PlayerCharacter.CurrentAttack;
+            var atkSpeed = PlayerCharacter.CurrentAttackSpeed;
+            var critRate = PlayerCharacter.CurrentCriticalChance;
+            var critDamage = PlayerCharacter.CurrentCriticalDamage;
+
+            var dpsValue = (1 - critRate) * atk * atkSpeed
+                           + critRate * atk * atkSpeed * (100 + critDamage) / 100f;
+            
             stats.text =
-                $"Atk: {PlayerCharacter.CurrentAttack}\nAtkSpeed: {PlayerCharacter.CurrentAttackSpeed}\nHealth: {PlayerCharacter.Health}";
+                $"[Atk] {atk} | [AtkSpeed] {atkSpeed}\n[CritRate] {critRate} | [CritDmg] {critDamage}\nHealth: {PlayerCharacter.Health}";
+            dps.text = $"DPS: {dpsValue}";
         }
     }
 
