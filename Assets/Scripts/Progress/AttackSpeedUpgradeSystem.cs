@@ -39,7 +39,7 @@ public class AttackSpeedUpgradeSystem : MonoBehaviour
     public void Initialize(int level)
     {
         CurrentLevel = level;
-        PlayerCharacter.IncreaseAttackSpeed(_amountPerLevel);
+        PlayerCharacter.SetAdditiveAttackSpeed(_amountPerLevel);
     }
 
     public bool TryUpgrade()
@@ -55,7 +55,7 @@ public class AttackSpeedUpgradeSystem : MonoBehaviour
     private void Upgrade()
     {
         CurrentLevel++;
-        PlayerCharacter.IncreaseAttackSpeed(CurrentLevel * _amountPerLevel);
+        PlayerCharacter.SetAdditiveAttackSpeed(CurrentLevel * _amountPerLevel);
     }
 
     private void CalculateNeededCost()

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ public class SamplePlayerUI : MonoBehaviour
     public GoldWallet GoldWallet;
     public AttackUpgradeSystem AttackUpgradeSystem;
     public AttackSpeedUpgradeSystem AttackSpeedUpgradeSystem;
-
+    
     [Header("Texts")]
     [SerializeField] private TextMeshProUGUI gold;
     [SerializeField] private TextMeshProUGUI stats;
@@ -37,25 +38,6 @@ public class SamplePlayerUI : MonoBehaviour
             AttackUpgradeSystem.OnLevelChanged += OnUpgradeSystemChanged;
         }
 
-        void OnUpgradeSystemChanged(int n)
-        {
-            RefreshUpgradeSystem();
-            RefreshStat();
-        }
-    }
-
-    private void Start()
-    {
-        if (PlayerCharacter != null)
-        {
-            RefreshStat();
-        }
-
-        if (GoldWallet != null)
-        {
-            RefreshGold(GoldWallet.CurrentGold);
-        }
-
         if (AttackUpgradeSystem != null)
         {
             upgradeAttack.onClick.AddListener(UpgradeAttack);
@@ -65,6 +47,40 @@ public class SamplePlayerUI : MonoBehaviour
         {
             upgradeAttackSpeed.onClick.AddListener(UpgradeAttackSpeed);
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (GoldWallet != null)
+        {
+            GoldWallet.OnGoldChanged -= RefreshGold;
+        }
+
+        if (AttackSpeedUpgradeSystem != null)
+        {
+            AttackSpeedUpgradeSystem.OnLevelChanged -= OnUpgradeSystemChanged;
+        }
+
+        if (AttackUpgradeSystem != null)
+        {
+            AttackUpgradeSystem.OnLevelChanged -= OnUpgradeSystemChanged;
+        }
+
+        if (AttackUpgradeSystem != null)
+        {
+            upgradeAttack.onClick.RemoveListener(UpgradeAttack);
+        }
+
+        if (AttackSpeedUpgradeSystem != null)
+        {
+            upgradeAttackSpeed.onClick.RemoveListener(UpgradeAttackSpeed);
+        }
+    }
+
+    void OnUpgradeSystemChanged(int n)
+    {
+        RefreshUpgradeSystem();
+        RefreshStat();
     }
 
     public void PrintAttackLog(DamageInfo log)
@@ -88,8 +104,8 @@ public class SamplePlayerUI : MonoBehaviour
 
     private void RefreshUpgradeSystem()
     {
-        attackUpgradeCost.text = $"Atk next cost: {AttackUpgradeSystem.CurrentUpgradeCost}";
-        attackSpeedUpgradeCost.text = $"AtkSpeed next cost: {AttackSpeedUpgradeSystem.CurrentUpgradeCost}";
+        attackUpgradeCost.text = $"Upgrade[ATK] {AttackUpgradeSystem.CurrentUpgradeCost}";
+        attackSpeedUpgradeCost.text = $"Upgrade[ATKSPEED]: {AttackSpeedUpgradeSystem.CurrentUpgradeCost}";
     }
 
     private void UpgradeAttack()
@@ -110,7 +126,7 @@ public class SamplePlayerUI : MonoBehaviour
     private void UpgradeAttackSpeed()
     {
         if (AttackSpeedUpgradeSystem == null) return;
-        ;
+        
         if (AttackSpeedUpgradeSystem.TryUpgrade())
         {
             RefreshStat();

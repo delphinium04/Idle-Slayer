@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class ProgressController : MonoBehaviour
@@ -6,6 +7,10 @@ public class ProgressController : MonoBehaviour
     [SerializeField] private GoldWallet goldWallet;
     [SerializeField] private AttackSpeedUpgradeSystem atkSpeedUpgradeSystem;
     [SerializeField] private AttackUpgradeSystem atkUpgradeSystem;
+
+    [Header("Offline Popup")]
+    [SerializeField] private GameObject goldRewardPopup;
+    [SerializeField] private TextMeshProUGUI goldDescription;
 
     private SaveData _saveData;
 
@@ -19,17 +24,26 @@ public class ProgressController : MonoBehaviour
 
         InitializeData();
         SubscribeEvents();
-        CheckOfflineReward();
+        RewardOfflineTime();
     }
 
-    private void CheckOfflineReward()
+    private void RewardOfflineTime()
     {
         var currentTime = DateTime.UtcNow;
         TimeSpan offlineTime = currentTime - _saveData.LastLoginTime;
-        Debug.Log($"미접속 시간: {offlineTime.Hours}H {offlineTime.Minutes}M");
-        if (offlineTime.TotalMinutes < 60) return;
+        Debug.Log($"미접속 시간: {offlineTime.Hours}:{offlineTime.Minutes}:{offlineTime.Seconds}");
 
-        Debug.Log($"보상 지급: {offlineTime.TotalSeconds:F0}");
+        if (offlineTime.TotalSeconds < 10)
+        {
+            goldRewardPopup.SetActive(false);
+            return;
+        }
+
+        var offlineGold = (int)offlineTime.TotalMinutes;
+        goldWallet.Add(offlineGold);
+        goldDescription.text = $"{offlineGold} gold reward";
+        goldRewardPopup.SetActive(true);
+        Debug.Log($"보상 지급: {offlineGold}");
     }
 
     private void SubscribeEvents()
@@ -90,6 +104,13 @@ public class ProgressController : MonoBehaviour
     private void GoldWallet_OnGoldChanged(int gold)
     {
         _saveData.Gold = gold;
+        SaveManager.Save(_saveData);
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (_saveData == null) return;
+        _saveData.LastLoginTime = System.DateTime.UtcNow;
         SaveManager.Save(_saveData);
     }
 

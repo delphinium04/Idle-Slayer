@@ -30,13 +30,11 @@ public class GoldWallet : MonoBehaviour
     public void Add(int gold)
     {
         CurrentGold += gold;
-        OnGoldChanged?.Invoke(CurrentGold);
     }
 
     public void Spend(int cost)
     {
         CurrentGold -= cost;
-        OnGoldChanged?.Invoke(CurrentGold);
     }
 
     #if UNITY_EDITOR

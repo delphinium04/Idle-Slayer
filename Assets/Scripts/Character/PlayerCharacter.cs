@@ -99,12 +99,12 @@ public class PlayerCharacter : MonoBehaviour, IDamageable, IAttacker
         enemy.TakeDamage(damageInfo);
     }
 
-    public void IncreaseAttack(int amount)
+    public void SetAdditiveAttack(int amount)
     {
         CurrentAttack = Data.DefaultStats.Attack + amount;
     }
 
-    public void IncreaseAttackSpeed(float amount)
+    public void SetAdditiveAttackSpeed(float amount)
     {
         CurrentAttackSpeed = Data.DefaultStats.AttackSpeed + amount;
     }
